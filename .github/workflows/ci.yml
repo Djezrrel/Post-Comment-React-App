@@ -4,38 +4,23 @@ on: [push]
 
 jobs:
   build-test:
-    runs-on: ubuntu-latest  # Corrigido o nome do SO
-
+    runs-on: ubuntu-20.04
     steps:
-      - name: Checkout do código
+
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Configurar cache do npm
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-cache-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-cache-
-
-      - name: Instalar dependências
-        run: npm ci  # Melhor que npm install para garantir consistência
-
-      - name: Build da aplicação
-        run: npm run build
-
-      - name: Rodar testes com Cypress
+      - name: Cypress Test
         uses: cypress-io/github-action@v5
         with:
           start: 'npm run dev'
-          wait-on: 'http://localhost:3000'  # Aguarda a aplicação iniciar
-          wait-on-timeout: 60  # Tempo limite de espera
+          build: 'npm run build'
 
-      - name: Upload dos resultados do Cypress
-        if: always()
-        uses: actions/upload-artifact@v3
+      - name: Upload Cypress Results
+        if: always()  # Mantendo a verificação correta
+        uses: actions/upload-artifact@v4
         with:
-          name: Cypress-Results
+          name: Cypress Result
           path: |
             cypress/screenshots
             cypress/videos
