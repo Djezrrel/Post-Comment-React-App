@@ -1,0 +1,8 @@
+🎯 O que esse workflow faz na prática?
+1️⃣ Baixa o código do repositório no ambiente do GitHub Actions.
+2️⃣ Configura cache do npm para acelerar a instalação das dependências.
+3️⃣ Instala os pacotes do projeto com npm ci.
+4️⃣ Faz o build da aplicação (npm run build).
+5️⃣ Roda os testes end-to-end com Cypress.
+6️⃣ Armazena os resultados dos testes (screenshots e vídeos).
+
